@@ -1,6 +1,10 @@
 wagtailgmaps
 ==================
 
+A fork from sprinload/wagtailgmaps with some changes purely for my benefit in a particular project. Some minor changes to add a lat/lng input as well as the actual address. 
+
+Pip install watailgmaps won't work for this fork but will get you started.
+
 ![Wagtailgmaps screenshot](http://i.imgur.com/9m9Gfcf.png)
 
 Simple Google Maps address formatter for Wagtail fields.
@@ -36,12 +40,19 @@ As for now, only fields using `FieldPanel` inside a `MultiFieldPanel` are suppor
 In your `models.py`, your custom Page model would have something similar to:
 
 ```
-address_panels = MultiFieldPanel([
-    FieldPanel('address', classname="gmap"),
-], heading="Street Address")
+map_address = models.CharField('Map address', max_length=255)
+map_geo = models.CharField('Map geolocation', max_length=255)
+...    
+    
+MultiFieldPanel([
+        FieldPanel('map_address'),
+        FieldPanel('map_geo', classname="gmap"),
+    ], heading="Address")
 ```
 
 Notice the `FieldPanel` is embedded in a `MultiFieldPanel`, even if it only contains a single element. If you define your `FieldPanel` outside it won't work. The app supports more than one map (field) at the same time.
+
+The classname goes on the second panel as the javascript fills it's first parent input field with the lat/lng and the input field previous to that with the address field.
 
 When editing the model from the admin interface the affected field shows up with a map, like the screenshot above.
 

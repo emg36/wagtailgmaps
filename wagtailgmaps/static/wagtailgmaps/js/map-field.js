@@ -26,8 +26,6 @@ $(document).ready(function() {
           marker.setPosition(results[0].geometry.location);
           $(input).val(results[0].formatted_address);
           $(input2).val(results[0].geometry.location.A + ", " + results[0].geometry.location.F);
-          // var blah = $.parseJSON(results);
-          // alert(blah);
           map.setCenter(results[0].geometry.location);
         } else {
           alert("Geocode was not successful for the following reason: " + status);

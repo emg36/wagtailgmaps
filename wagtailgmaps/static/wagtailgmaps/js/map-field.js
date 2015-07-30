@@ -12,7 +12,7 @@ $(document).ready(function() {
       }, function(responses) {
         if (responses && responses.length > 0) {
             $(input).val(responses[0].formatted_address);
-            $(input2).val(responses[0].geometry.location.A + ", " + responses[0].geometry.location.F);
+            $(input2).val(responses[0].geometry.location.lat() + ", " + responses[0].geometry.location.lng());
         } else {
           alert('Cannot determine address at this location.');
         }
@@ -25,7 +25,7 @@ $(document).ready(function() {
         if (status == google.maps.GeocoderStatus.OK) {
           marker.setPosition(results[0].geometry.location);
           $(input).val(results[0].formatted_address);
-          $(input2).val(results[0].geometry.location.A + ", " + results[0].geometry.location.F);
+          $(input2).val(results[0].geometry.location.lat() + ", " + results[0].geometry.location.lng());
           map.setCenter(results[0].geometry.location);
         } else {
           alert("Geocode was not successful for the following reason: " + status);

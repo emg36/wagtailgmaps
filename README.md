@@ -5,6 +5,10 @@ A fork from sprinload/wagtailgmaps with some changes purely for my benefit in a 
 
 Pip install watailgmaps won't work for this fork but will get you started.
 
+I have the default address for the map as 'Christchurch, New Zealand'. If you change this you might want to change the condition in the js looking comparing the params.address.
+
+Call the tag with the geo_location i.e. latlng rather than an address to set the marker where you want rather than setting the marker in the default position within the address. {% map_editor form.map_geo.value 100 "%" 300 "px" 16 %}
+
 ![Wagtailgmaps screenshot](http://i.imgur.com/9m9Gfcf.png)
 
 Simple Google Maps address formatter for Wagtail fields.

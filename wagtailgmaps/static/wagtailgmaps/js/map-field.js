@@ -60,14 +60,6 @@ $(document).ready(function() {
             geocodePosition(marker[map_key].getPosition(), mapElem.input, mapElem.input2);
           });
 
-          google.maps.event.addListener(marker[map_key], 'dragend', function(event) {
-            geocodePosition(marker[map_key].getPosition(), mapElem.input, mapElem.input2);
-          });
-          google.maps.event.addListener(map[map_key], 'click', function(event) {
-            marker[map_key].setPosition(event.latLng);
-            geocodePosition(marker[map_key].getPosition(), mapElem.input, mapElem.input2);
-          });
-
           // Event listeners to update map when press enter or tab
           $(mapElem.input).bind("enterKey",function(event) {
             geocodeAddress($(this).val(), mapElem.input, mapElem.input2, marker[map_key], map[map_key]);
@@ -98,6 +90,11 @@ $(document).ready(function() {
         // Get latlong form address to initialize map
         geocoder.geocode( { "address": params.address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
+            if (params.address != 'Christchurch, New Zealand') {
+                var geo_dict = new google.maps.LatLng(parseFloat(params.address.split(', ')[0]), parseFloat(params.address.split(', ')[1]));
+            } else {
+                geo_dict = results[0].geometry.location;
+            };
             set_address({}, results[0].geometry.location, "map-canvas-" + params.map_id, params.map_id, params.zoom, {}, {});
           } else {
             alert("Geocode was not successful for the following reason: " + status);

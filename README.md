@@ -19,13 +19,13 @@ Assuming you have a [Wagtail](https://wagtail.io/) project up and running:
 
 ``` $ pip install wagtailgmaps```
 
-add wagtailgmaps to your `settings.py` in the INSTALLED_APPS section:
+add wagtailgmaps to your `settings.py` in the INSTALLED_APPS section before!!! wagtail.wagtailadmin:
 
 ```
 ...
-    'modelcluster',
     'wagtailgmaps',
-    'wagtail.contrib.wagtailsitemaps',
+...
+    'wagtail.wagtailadmin',
 ...
 ```
 

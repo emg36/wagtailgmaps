@@ -7,6 +7,8 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
+# all the real work has been done by springload https://github.com/springload/wagtailgmaps
+
 setup(
     name='wagtailgmaps',
     version='0.2.2',
@@ -15,7 +17,7 @@ setup(
     license='BSD License',
     description='Google Maps widget for address fields in Wagtail',
     long_description=README,
-    url='https://github.com/springload/wagtailgmaps/',
+    url='https://github.com/emg36/wagtailgmaps/',
     author='Jordi J. Tablada',
     author_email='jordi@springload.co.nz',
     classifiers=[

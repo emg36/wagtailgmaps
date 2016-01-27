@@ -3,11 +3,9 @@ wagtailgmaps
 
 A fork from sprinload/wagtailgmaps with some changes purely for my benefit in a particular project. Some minor changes to add a lat/lng input as well as the actual address. 
 
-Pip install watailgmaps won't work for this fork but will get you started.
-
 I have the default address for the map as 'Christchurch, New Zealand'. If you change this you might want to change the condition in the js looking comparing the params.address.
 
-Call the tag with the geo_location i.e. latlng rather than an address to set the marker where you want rather than setting the marker in the default position within the address. {% map_editor form.map_geo.value 100 "%" 300 "px" 16 %}
+Call the tag with the map_geo i.e. latlng rather than an address to set the marker where you want rather than setting the marker in the default position within the address. {% map_editor form.map_geo.value 100 "%" 300 "px" 16 %}
 
 ![Wagtailgmaps screenshot](http://i.imgur.com/9m9Gfcf.png)
 
@@ -17,7 +15,7 @@ Simple Google Maps address formatter for Wagtail fields.
 
 Assuming you have a [Wagtail](https://wagtail.io/) project up and running:
 
-``` $ pip install wagtailgmaps```
+``` $ pip install git+https://github.com/emg36/wagtailgmaps.git ```
 
 add wagtailgmaps to your `settings.py` in the INSTALLED_APPS section before!!! wagtail.wagtailadmin:
 

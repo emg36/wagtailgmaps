@@ -12,7 +12,7 @@ register = template.Library()
 
 # Map template
 @register.inclusion_tag('wagtailgmaps/map_editor.html')
-def map_editor(address, width, width_units, height, height_units, zoom):
+def map_editor(address, width, width_units, height, height_units, zoom=None):
     """
     Tag to output a Google Map with the given attributes
     """

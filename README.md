@@ -71,5 +71,5 @@ Feel free to edit the provided JS to add/edit the events you might need.
 Once your address field is properly formatted and stored in the database you can use it in your front end Django templates. Example:
 
 ```
-<a href="http://maps.google.com/?q={{ address }}">Open map</a>
+<a href="http://maps.google.com/?q={{ map_address }}">Open map</a>
 ```

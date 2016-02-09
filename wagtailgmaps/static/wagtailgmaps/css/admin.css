@@ -9,3 +9,7 @@ li.gmap {
 li.gmap img {
     max-width: none;
 }
+
+.hidden {
+	display: none;
+}

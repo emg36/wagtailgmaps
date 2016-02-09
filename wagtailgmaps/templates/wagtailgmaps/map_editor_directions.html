@@ -1,0 +1,27 @@
+<script type="text/javascript">
+    // Declare var params only first time
+    try {
+        if (!params){
+            var params = {};
+        }
+    } catch(e) { 
+        var params = {};
+    }
+    // Initialize the map after page loading. Pass all necessary params to identify everything related to this map
+    params["{{ map_id }}"] = {"map_id": "{{ map_id }}", "start_address": "{{start_address}}", "end_address": "{{end_address}}", "travel_mode": "{{travel_mode}}" };
+    {% if address %}
+        params["{{ map_id }}"]["address"] = "{{ address }}";
+    {% endif %}
+    document.addEventListener('wagtailmaps_ready',  function(event){
+        // Wait until all the maps related functions are available and ready
+        initialize_map_directions(params["{{ map_id }}"]);
+    });
+
+</script>
+<br/>
+<div id="map-canvas-{{ map_id }}" {% if width %}style="width: {{ width }}{{ width_units }}; height: {{ height }}{{ height_units }};"{% endif %} class="map-googlemap">
+    <noscript>
+        <div class="">Why don't you have javascript turned on?</div>
+    </noscript>
+    
+</div>

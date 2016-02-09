@@ -1,3 +1,5 @@
+Note to self - update docs to add distance and time stuff (distance, travel_time, hidden, readonly, classnames) etc
+
 wagtailgmaps
 ==================
 

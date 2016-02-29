@@ -114,8 +114,7 @@ $(document).ready(function() {
 
       mapElem.distance.attr('readonly', true);
       mapElem.travel_time.attr('readonly', true);
-      
-      // styles specific to this particular project
+
       var styles = [
         {
           "featureType": "administrative",
@@ -178,19 +177,21 @@ $(document).ready(function() {
           styles: styles,
       };
 
-      directionsService.route({
-        origin: mapElem.start.val(),
-        destination: mapElem.end.val(),
-        travelMode: google.maps.TravelMode.DRIVING
-      }, function(response, status) {
-        if (status === google.maps.DirectionsStatus.OK) {
-          directionsDisplay.setDirections(response);
-          mapElem.distance.val(response.routes[0].legs[0].distance.text);
-          mapElem.travel_time.val(response.routes[0].legs[0].duration.text);
-        } else {
-          window.alert('Directions request failed due to ' + status);
-        }
-      });
+      if (mapElem.start.val() != '') {
+        directionsService.route({
+          origin: mapElem.start.val(),
+          destination: mapElem.end.val(),
+          travelMode: google.maps.TravelMode.DRIVING
+        }, function(response, status) {
+          if (status === google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+            mapElem.distance.val(response.routes[0].legs[0].distance.text);
+            mapElem.travel_time.val(response.routes[0].legs[0].duration.text);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      };
 
       map[map_key] = new google.maps.Map(mapElem[map_key], mapOptions);
       directionsDisplay.setMap(map[map_key]);
@@ -219,6 +220,13 @@ $(document).ready(function() {
             $(this).trigger("enterKey");
           }
       });
+      // $(mapElem.travel).keypress(function(event) {
+      //     if(event.keyCode == 13)
+      //     {
+      //       event.preventDefault();
+      //       $(this).trigger("enterKey");
+      //     }
+      // });
     }
 
 

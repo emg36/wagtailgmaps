@@ -84,15 +84,3 @@ def api_key():
     return {
         'api_key': settings.WAGTAIL_GOOGLE_MAPS_API_KEY
     }
-
-
-
-
-        'address': address,
-        'zoom': zoom,
-        'width': width,
-        'width_units': width_units,
-        'height': height,
-        'height_units': height_units,
-    }
-

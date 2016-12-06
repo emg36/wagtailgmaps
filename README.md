@@ -9,8 +9,9 @@ I have the default address for the map as 'Christchurch, New Zealand'. If you ch
 
 Call the tag with the map_geo i.e. latlng rather than an address to set the marker where you want rather than setting the marker in the default position within the address. {% map_editor form.map_geo.value 100 "%" 300 "px" 16 %}
 
-![Wagtailgmaps screenshot](http://imgur.com/a/ejUNL)
-![](http://imgur.com/a/ejUNL)
+![Imgur](http://i.imgur.com/4QQ5dub.png)
+
+![Imgur](http://i.imgur.com/LYpOoe5.png)
 
 
 Simple Google Maps address formatter for Wagtail fields.

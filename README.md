@@ -9,7 +9,9 @@ I have the default address for the map as 'Christchurch, New Zealand'. If you ch
 
 Call the tag with the map_geo i.e. latlng rather than an address to set the marker where you want rather than setting the marker in the default position within the address. {% map_editor form.map_geo.value 100 "%" 300 "px" 16 %}
 
-![Wagtailgmaps screenshot](http://i.imgur.com/9m9Gfcf.png)
+![Wagtailgmaps screenshot](http://imgur.com/a/ejUNL)
+
+
 
 Simple Google Maps address formatter for Wagtail fields.
 
@@ -62,7 +64,7 @@ MultiFieldPanel([
 for directions use the following:
 
 start_place = models.CharField('Starting place', max_length=255, help_text='e.g. Christchurch, NZ. Click in text field and press return to set map')
-    end_place = models.CharField('End place', max_length=255, help_text='e.g. Greymouth, NZ. Click in text field and press return to set map')
+end_place = models.CharField('End place', max_length=255, help_text='e.g. Greymouth, NZ. Click in text field and press return to set map')
 
 travel_choices = (
     ("DRIVING","DRIVING"),
@@ -72,6 +74,7 @@ travel_choices = (
 travel_mode = models.CharField('Travel mode', choices=travel_choices, max_length=30, default='DRIVING')
 distance = models.CharField('Distance', max_length=40, help_text='Display only')
 travel_time = models.CharField("Travel time", max_length=40, help_text='Display only')
+...
 
 MultiFieldPanel([
       FieldPanel('distance', classname=''),

@@ -35,6 +35,12 @@ Add a couple of necessary constants in your `settings.py` file:
 ...
 WAGTAIL_ADDRESS_MAP_CENTER = 'Wellington, New Zealand'
 WAGTAIL_ADDRESS_MAP_ZOOM = 8
+
+WAGTAIL_DIRECTIONS_START_ADDRESS = 'Christchurch, New Zealand'
+WAGTAIL_DIRECTIONS_END_ADDRESS = 'Greymouth, New Zealand'
+WAGTAIL_GOOGLE_MAPS_API_KEY = '***'
+
+Don't forget to add these into the console and enable the correct api's (javascript, geocoding, directions, geolocation)
 ...
 ```
 `WAGTAIL_ADDRESS_MAP_CENTER` must be a properly formatted address. Also, remember valid zoom levels go from 0 to 18. See [Map options](https://developers.google.com/maps/documentation/javascript/tutorial#MapOptions) for details.
@@ -52,6 +58,29 @@ MultiFieldPanel([
         FieldPanel('map_address'),
         FieldPanel('map_geo', classname="gmap"),
     ], heading="Address")
+    
+for directions use the following:
+
+start_place = models.CharField('Starting place', max_length=255, help_text='e.g. Christchurch, NZ. Click in text field and press return to set map')
+    end_place = models.CharField('End place', max_length=255, help_text='e.g. Greymouth, NZ. Click in text field and press return to set map')
+
+travel_choices = (
+    ("DRIVING","DRIVING"),
+    ("TRANSIT","TRANSIT"),
+    ("WALKING","WALKING"),
+)
+travel_mode = models.CharField('Travel mode', choices=travel_choices, max_length=30, default='DRIVING')
+distance = models.CharField('Distance', max_length=40, help_text='Display only')
+travel_time = models.CharField("Travel time", max_length=40, help_text='Display only')
+
+MultiFieldPanel([
+      FieldPanel('distance', classname=''),
+      FieldPanel('travel_time', classname=''),
+      FieldPanel('travel_mode'),
+      FieldPanel('start_place'),
+      FieldPanel('end_place', classname='gmap_directions'),
+], heading='Travel times', classname='collapsible gmap_directions_holder'),
+        
 ```
 
 Notice the `FieldPanel` is embedded in a `MultiFieldPanel`, even if it only contains a single element. If you define your `FieldPanel` outside it won't work. The app supports more than one map (field) at the same time.

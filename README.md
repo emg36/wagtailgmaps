@@ -22,13 +22,16 @@ Assuming you have a [Wagtail](https://wagtail.io/) project up and running:
 
 ``` $ pip install git+https://github.com/emg36/wagtailgmaps.git ```
 
+``` $ pip install django-overextends ```
+
 add wagtailgmaps to your `settings.py` in the INSTALLED_APPS section before!!! wagtail.wagtailadmin:
 
 ```
 ...
-    'wagtail.wagtailadmin',
-...
+    'overextends',
     'wagtailgmaps',
+...
+    'wagtail.wagtailadmin',
 ...
 ```
 
@@ -42,10 +45,25 @@ WAGTAIL_ADDRESS_MAP_ZOOM = 8
 WAGTAIL_DIRECTIONS_START_ADDRESS = 'Christchurch, New Zealand'
 WAGTAIL_DIRECTIONS_END_ADDRESS = 'Greymouth, New Zealand'
 WAGTAIL_GOOGLE_MAPS_API_KEY = '***'
-
-Don't forget to add these into the console and enable the correct api's (javascript, geocoding, directions, geolocation)
-...
 ```
+#modify the TEMPLATES variable in settings similarly to below:
+```
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(PROJECT_DIR, 'templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'builtins': ['overextends.templatetags.overextends_tags'],
+        },
+    },
+]
+```
+Don't forget to add these into the googles developers console and enable the correct api's (javascript, geocoding, directions, geolocation)
+...
+
 `WAGTAIL_ADDRESS_MAP_CENTER` must be a properly formatted address. Also, remember valid zoom levels go from 0 to 18. See [Map options](https://developers.google.com/maps/documentation/javascript/tutorial#MapOptions) for details.
 
 As for now, only fields using `FieldPanel` inside a `MultiFieldPanel` are supported. This is due to the lack of support of the `classname` attribute for other panel fields other than `MultiFieldPanel`.
@@ -61,9 +79,9 @@ MultiFieldPanel([
         FieldPanel('map_address'),
         FieldPanel('map_geo', classname="gmap"),
     ], heading="Address")
-    
+```
 for directions use the following:
-
+```
 start_place = models.CharField('Starting place', max_length=255, help_text='e.g. Christchurch, NZ. Click in text field and press return to set map')
 end_place = models.CharField('End place', max_length=255, help_text='e.g. Greymouth, NZ. Click in text field and press return to set map')
 

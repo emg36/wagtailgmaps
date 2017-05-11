@@ -22,7 +22,6 @@ Assuming you have a [Wagtail](https://wagtail.io/) project up and running:
 
 ``` $ pip install git+https://github.com/emg36/wagtailgmaps.git ```
 
-``` $ pip install django-overextends ```
 
 add wagtailgmaps to your `settings.py` in the INSTALLED_APPS section before!!! wagtail.wagtailadmin:
 

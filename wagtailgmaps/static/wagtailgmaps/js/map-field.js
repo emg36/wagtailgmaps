@@ -12,7 +12,7 @@ $(document).ready(function() {
       }, function(responses) {
         if (responses && responses.length > 0) {
             $(input).val(responses[0].formatted_address);
-            $(input2).val(responses[0].geometry.location.lat() + ", " + responses[0].geometry.location.lng());
+            $(input2).val(pos.lat() + ", " + pos.lng());
         } else {
           alert('Cannot determine address at this location.');
         }

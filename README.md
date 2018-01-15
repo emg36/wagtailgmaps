@@ -22,6 +22,10 @@ Assuming you have a [Wagtail](https://wagtail.io/) project up and running:
 
 ``` $ pip install git+https://github.com/emg36/wagtailgmaps.git ```
 
+for django 1.8 and down you will need to pip install django-overextends
+then in the wagtailgmaps admin_base.html you will need to change the extends tag to overextends. 
+
+If using django 1.9 and up just ignore the overextends instructions.
 
 add wagtailgmaps to your `settings.py` in the INSTALLED_APPS section before!!! wagtail.wagtailadmin:
 
@@ -65,7 +69,7 @@ Don't forget to add these into the googles developers console and enable the cor
 
 `WAGTAIL_ADDRESS_MAP_CENTER` must be a properly formatted address. Also, remember valid zoom levels go from 0 to 18. See [Map options](https://developers.google.com/maps/documentation/javascript/tutorial#MapOptions) for details.
 
-As for now, only fields using `FieldPanel` inside a `MultiFieldPanel` are supported. This is due to the lack of support of the `classname` attribute for other panel fields other than `MultiFieldPanel`.
+`FieldPanel` and `InlinePanel` inside a `MultiFieldPanel` are supported.
 
 In your `models.py`, your custom Page model would have something similar to:
 

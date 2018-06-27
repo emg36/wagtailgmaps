@@ -18,24 +18,22 @@ Simple Google Maps address formatter for Wagtail fields.
 
 # Quickstart
 
+This module only supported in Django 1.9+ and Wagtail 2.0+
+
 Assuming you have a [Wagtail](https://wagtail.io/) project up and running:
 
 ``` $ pip install git+https://github.com/emg36/wagtailgmaps.git ```
 
-for django 1.8 and down you will need to pip install django-overextends
-then in the wagtailgmaps admin_base.html you will need to change the extends tag to overextends. 
-
-If using django 1.9 and up just ignore the overextends instructions.
-
-add wagtailgmaps to your `settings.py` in the INSTALLED_APPS section before!!! wagtail.wagtailadmin:
+add wagtailgmaps to your `settings.py` in the INSTALLED_APPS section **before** wagtail.admin:
 
 ```
+INSTALLED_APPS = [
 ...
-    'overextends',
     'wagtailgmaps',
 ...
-    'wagtail.wagtailadmin',
+    'wagtail.admin',
 ...
+]
 ```
 
 Add a couple of necessary constants in your `settings.py` file:
@@ -49,21 +47,7 @@ WAGTAIL_DIRECTIONS_START_ADDRESS = 'Christchurch, New Zealand'
 WAGTAIL_DIRECTIONS_END_ADDRESS = 'Greymouth, New Zealand'
 WAGTAIL_GOOGLE_MAPS_API_KEY = '***'
 ```
-#modify the TEMPLATES variable in settings similarly to below:
-```
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(PROJECT_DIR, 'templates'),
-        ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'builtins': ['overextends.templatetags.overextends_tags'],
-        },
-    },
-]
-```
+
 Don't forget to add these into the googles developers console and enable the correct api's (javascript, geocoding, directions, geolocation)
 ...
 
@@ -126,4 +110,21 @@ Once your address field is properly formatted and stored in the database you can
 
 ```
 <a href="http://maps.google.com/?q={{ map_address }}">Open map</a>
+```
+
+
+To set the coordinates field to readonly, add the following widget when defining your FiendPanel:
+```
+...
+MultiFieldPanel([
+    FieldPanel('map_address'),
+    FieldPanel('map_geo', classname='gmap', widget=TextInput(attrs={'readonly':'readonly'}))
+], heading='Address')
+```
+
+Similarly to hide the coordinates field:
+```
+...
+    FieldPanel('map_geo', classname='gmap', widget=TextInput(attrs={'hidden':'hidden'}))
+...
 ```

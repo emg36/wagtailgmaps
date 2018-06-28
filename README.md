@@ -3,7 +3,7 @@ Note to self - update docs to add distance and time stuff (distance, travel_time
 wagtailgmaps
 ==================
 
-A fork from sprinload/wagtailgmaps with some changes purely for my benefit in a particular project. Some minor changes to add a lat/lng input as well as the actual address. 
+A fork from springload/wagtailgmaps with some changes purely for my benefit in a particular project. Some minor changes to add a lat/lng input as well as the actual address. 
 
 I have the default address for the map as 'Christchurch, New Zealand'. If you change this you might want to change the condition in the js looking comparing the params.address.
 
@@ -36,7 +36,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-Add a couple of necessary constants in your `settings.py` file:
+Add a couple of necessary constants in your `settings.py` file, these are used as initial default values:
 
 ```
 ...
@@ -69,8 +69,8 @@ MultiFieldPanel([
 ```
 for directions use the following:
 ```
-start_place = models.CharField('Starting place', max_length=255, help_text='e.g. Christchurch, NZ. Click in text field and press return to set map')
-end_place = models.CharField('End place', max_length=255, help_text='e.g. Greymouth, NZ. Click in text field and press return to set map')
+start_place = models.CharField('Starting place', max_length=255, help_text='e.g. Christchurch, NZ. Click in text field and press the update button to set map')
+end_place = models.CharField('End place', max_length=255, help_text='e.g. Greymouth, NZ. Click in text field and press the update button to set map')
 
 travel_choices = (
     ("DRIVING","DRIVING"),
@@ -102,7 +102,7 @@ The field gets updated according to the [Google Geocoding Service](https://devel
 
 * The map market gets dragged and dropped into a location (`dragend` JS event).
 * Click happens somewhere in the map (`click` JS event).
-* Return key is pressed after editing the field (`enterKey` JS event for return key only).
+* 'Update Map' is clicked after editing the field (`click` JS event).
 
 Feel free to edit the provided JS to add/edit the events you might need.
 

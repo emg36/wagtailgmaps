@@ -2,7 +2,6 @@
 li.gmap {
     overflow: hidden;
     -webkit-perspective: 1000;
-    -moz-perspective: 1000;
     perspective: 1000;
 }
 
@@ -11,5 +10,13 @@ li.gmap img {
 }
 
 .hidden {
-	display: none;
+    display: none;
+}
+
+.update-map-button {
+    cursor: pointer;
+    padding-top: 8px; 
+    margin-top: 1.2em; 
+    margin-left: 16.66%; 
+    margin-bottom: 1.2em;
 }

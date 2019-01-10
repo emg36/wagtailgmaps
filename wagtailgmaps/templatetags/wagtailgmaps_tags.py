@@ -3,32 +3,44 @@ import uuid
 from django import template
 from django.conf import settings
 
-from distutils.version import StrictVersion
-
-from wagtailgmaps.utils import get_wagtail_version
-
 register = template.Library()
 
 
 # Map template
 @register.inclusion_tag('wagtailgmaps/map_editor.html')
-def map_editor(self, width, width_units, height, height_units, zoom=None):
+def map_editor(self, width, width_units, height, height_units, zoom=None, front_end=False):
     """
     Tag to output a Google Map with the given attributes
     """
-    address = self.children[0].bound_field.value
-    for s in self.children:
-        if s.bound_field.name == 'map_address':
-            address = s.bound_field.value()
-            if (address is None) or (address == ""):
-                address = settings.WAGTAIL_ADDRESS_MAP_CENTER
+
+    if (self is None) or (self == ""): # this is for an outlier that might be a frontend map but want the map to render rather than error
+        address = settings.WAGTAIL_ADDRESS_MAP_CENTER
+    elif front_end == 'True':
+        address = self
+    else:
+        # backend map that isn't inline and inside a multifield
+        address = self.children[0].bound_field.value()
+        if (address is None) or (address == ""):
+            address = settings.WAGTAIL_ADDRESS_MAP_CENTER
+        for s in self.children:
+            if s.bound_field.name == 'map_address':
+                address = s.bound_field.value()
+                if (address is None) or (address == ""):
+                    address = settings.WAGTAIL_ADDRESS_MAP_CENTER
     try:
         if self.instance.sort_order:
             map_id = 'id_maptest-{0}'.format(self.instance.sort_order)
         else:
             map_id = 'id_maptest-__prefix__'
     except Exception:
-        map_id = 'id_maptest-only'
+        # this needs to have unique map id per instance/multi field.
+        # Use case is when multi inline panels are created but the page doesn't 
+        # save correctly and the unique orderable id's are thrown out the window
+        try:
+            if 'children' in self.__dict__.keys():
+                map_id = 'id_map-{0}'.format(self.children[0].field_name)
+        except Exception:
+            map_id = 'id_maptest-only'
 
     if zoom is None:
         zoom = settings.WAGTAIL_ADDRESS_MAP_ZOOM
@@ -59,9 +71,7 @@ def map_editor_directions(self, width, width_units, height, height_units):
     travel_mode_id = 'id_travel_mode'
     distance_id = 'id_distance'
     time_id = 'id_travel_time'
-    # print(self.__dict__)
     for s in self.children:
-        # print(s.bound_field.__dict__) #, s.id_for_label(), s.__dict__)
         if s.bound_field.name == 'start_place': #id_for_label() == 'id_start_address':
             start_address = s.bound_field.value()
             start_address_id = s.bound_field.id_for_label
@@ -77,8 +87,6 @@ def map_editor_directions(self, width, width_units, height, height_units):
         if s.bound_field.name == 'travel_time': #id_for_label() == 'id_end_address':
             travel_time = s.bound_field.value()
             travel_time_id = s.bound_field.id_for_label
-        # print(s.bound_field.__dict__)
-        # print(s.instance.__dict__, self.instance.__dict__)
 
     if (start_address is None) or (start_address == ""):
         start_address = settings.WAGTAIL_DIRECTIONS_START_ADDRESS
@@ -89,7 +97,6 @@ def map_editor_directions(self, width, width_units, height, height_units):
     if (travel_mode is None) or (travel_mode == ""):
         travel_mode = 'DRIVING'
 
-    # map_id = uuid.uuid4()  # Something a bit simpler would be probably ok too..
     try:
         if self.instance.sort_order:
             map_id = 'id_day-{0}'.format(self.instance.sort_order)
@@ -115,12 +122,11 @@ def map_editor_directions(self, width, width_units, height, height_units):
     }
 
 
-@register.inclusion_tag('wagtailgmaps/api_key.html')
+@register.simple_tag('wagtailgmaps/api_key.html')
 def api_key():
     """
-    Return a string version of the google maps api kei from settings
+    Return a string version of the google maps api key from settings
     """
 
-    return {
-        'api_key': settings.WAGTAIL_GOOGLE_MAPS_API_KEY
+    return settings.WAGTAIL_GOOGLE_MAPS_API_KEY
     }

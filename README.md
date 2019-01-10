@@ -133,6 +133,7 @@ Feel free to edit the provided JS to add/edit the events you might need.
 Once your address field is properly formatted and stored in the database you can use it in your front end Django templates. Example:
 
 ```
+{% load wagtailgmaps_tags %}
 <a href="http://maps.google.com/?q={{ map_address }}&key={% api_key %}">Open map</a>
 ```
 
@@ -160,6 +161,8 @@ def map_editor(self, width, width_units, height, height_units, zoom=None, front_
 ```
 So the code in the template should look like this:
 ```
+{% load wagtailgmaps_tags %}
+
 {% map_editor map_geo width=100 width_units="%" height=50 height_units="%" zoom=None front_end="True" %}
 ```
 The use case for this is to open up a frontend form that uses the map fields.

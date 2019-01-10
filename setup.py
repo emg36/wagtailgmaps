@@ -11,15 +11,15 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='wagtailgmaps',
-    version='0.3',
+    version='0.9',
     packages=['wagtailgmaps'],
     include_package_data=True,
     license='BSD License',
-    description='Google Maps widget for address fields in Wagtail',
+    description='Google Maps widget for address fields and directions in Wagtail',
     long_description=README,
     url='https://github.com/emg36/wagtailgmaps/',
-    author='Jordi J. Tablada, Elliot G',
-    author_email='jordi@springload.co.nz, elliot@make.nz',
+    author='Jordi J. Tablada, Elliot G, Blake G',
+    author_email='jordi@springload.co.nz, elliot@make.nz, blake@make.nz',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

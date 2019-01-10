@@ -140,6 +140,7 @@ Once your address field is properly formatted and stored in the database you can
 
 To set the coordinates field to readonly, add the following widget when defining your FieldPanel:
 ```
+from django.forms import TextInput
 ...
 MultiFieldPanel([
     FieldPanel('map_address'),

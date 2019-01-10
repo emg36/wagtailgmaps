@@ -1,5 +1,3 @@
-Note to self - update docs to add distance and time stuff (distance, travel_time, hidden, readonly, classnames) etc
-
 wagtailgmaps
 ==================
 
@@ -67,6 +65,31 @@ MultiFieldPanel([
         FieldPanel('map_geo', classname="gmap"),
     ], heading="Address")
 ```
+
+if using an inline solution (like an Orderable), the panels should be set up like so:
+```
+class Address(Orderable):
+    page = ParentalKey('app.AddressDirectoryPage, related_name='address_related', on_delete=models.CASCADE)
+    map_address = CharField('Map address', max_length=255)
+    map_geo = CharField('Map geolocation', max_length=255)
+    
+    panels = [
+        FieldPanel('map_address'),
+        FieldPanel('map_geo'),
+    ]
+
+class AddressDirectoryPage(Page):
+    ...
+
+AddressDirectoryPage.content_panels = [
+    ...
+    MultiFieldPanel([
+        InlinePanel('address_related'),
+    ], heading='Many addresses),
+    ...
+]
+```
+
 for directions use the following:
 ```
 start_place = models.CharField('Starting place', max_length=255, help_text='e.g. Christchurch, NZ. Click in text field and press the update button to set map')
@@ -93,6 +116,7 @@ MultiFieldPanel([
 ```
 
 Notice the `FieldPanel` is embedded in a `MultiFieldPanel`, even if it only contains a single element. If you define your `FieldPanel` outside it won't work. The app supports more than one map (field) at the same time.
+EXCEPT in the above mentioned case where an 'inline solution' is being used.
 
 The classname goes on the second panel as the javascript fills it's first parent input field with the lat/lng and the input field previous to that with the address field.
 
@@ -109,11 +133,11 @@ Feel free to edit the provided JS to add/edit the events you might need.
 Once your address field is properly formatted and stored in the database you can use it in your front end Django templates. Example:
 
 ```
-<a href="http://maps.google.com/?q={{ map_address }}">Open map</a>
+<a href="http://maps.google.com/?q={{ map_address }}&key={% api_key %}">Open map</a>
 ```
 
 
-To set the coordinates field to readonly, add the following widget when defining your FiendPanel:
+To set the coordinates field to readonly, add the following widget when defining your FieldPanel:
 ```
 ...
 MultiFieldPanel([
@@ -128,3 +152,14 @@ Similarly to hide the coordinates field:
     FieldPanel('map_geo', classname='gmap', widget=TextInput(attrs={'hidden':'hidden'}))
 ...
 ```
+
+For using the map in the front end, the following template tag must be loaded and given parameters for this function:
+```
+def map_editor(self, width, width_units, height, height_units, zoom=None, front_end=False):
+...
+```
+So the code in the template should look like this:
+```
+{% map_editor map_geo width=100 width_units="%" height=50 height_units="%" zoom=None front_end="True" %}
+```
+The use case for this is to open up a frontend form that uses the map fields.

@@ -127,4 +127,4 @@ def api_key():
     """
 
     return settings.WAGTAIL_GOOGLE_MAPS_API_KEY
-    }
+    

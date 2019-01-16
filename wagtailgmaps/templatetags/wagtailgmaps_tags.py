@@ -120,7 +120,7 @@ def map_editor_directions(self, width, width_units, height, height_units):
     }
 
 
-@register.simple_tag('wagtailgmaps/api_key.html')
+@register.simple_tag
 def api_key():
     """
     Return a string version of the google maps api key from settings
